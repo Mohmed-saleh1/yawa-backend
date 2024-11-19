@@ -54,3 +54,9 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Yarn configuration
+.yarn
+yarn.lock
+.pnp.cjs
+.pnp.loader.mjs
