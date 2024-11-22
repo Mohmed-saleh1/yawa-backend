@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { EventModule } from './events/events.module';
 import { YogaClassModule } from './yoga/yoga.module';
 import { PilatesModule } from './Pilates/pilates.module';
+import { BalletModule } from './ballet/ballet.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PilatesModule } from './Pilates/pilates.module';
     EventModule,
     YogaClassModule,
     PilatesModule,
+    BalletModule,
   ],
 })
 export class AppModule {}
