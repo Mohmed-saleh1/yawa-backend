@@ -4,6 +4,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { EventModule } from './events/events.module';
 import { YogaClassModule } from './yoga/yoga.module';
+import { PilatesModule } from './Pilates/pilates.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { YogaClassModule } from './yoga/yoga.module';
     UsersModule,
     EventModule,
     YogaClassModule,
+    PilatesModule,
   ],
 })
 export class AppModule {}
