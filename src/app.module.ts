@@ -10,6 +10,7 @@ import { PrivateClassModule } from './private-class/private-class.module';
 import { MassageModule } from './massage/massage.module';
 import { AllProgramsModule } from './allPrograms/allPrograms.module';
 import { MembershipModule } from './membership/membership.module';
+import { PackageModule } from './packages/packages.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { MembershipModule } from './membership/membership.module';
     MassageModule,
     AllProgramsModule,
     MembershipModule,
+    PackageModule,
   ],
 })
 export class AppModule {}
