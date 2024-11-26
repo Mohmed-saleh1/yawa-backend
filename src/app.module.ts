@@ -7,6 +7,7 @@ import { YogaClassModule } from './yoga/yoga.module';
 import { PilatesModule } from './Pilates/pilates.module';
 import { BalletModule } from './ballet/ballet.module';
 import { PrivateClassModule } from './private-class/private-class.module';
+import { MassageModule } from './massage/massage.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PrivateClassModule } from './private-class/private-class.module';
     PilatesModule,
     BalletModule,
     PrivateClassModule,
+    MassageModule,
   ],
 })
 export class AppModule {}
