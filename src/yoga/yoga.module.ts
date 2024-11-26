@@ -12,5 +12,6 @@ import { YogaClass, YogaClassSchema } from './yoga.entity';
   ],
   controllers: [YogaClassController],
   providers: [YogaClassService],
+  exports: [YogaClassService],
 })
 export class YogaClassModule {}

@@ -12,5 +12,6 @@ import { PrivateClassEntity, PrivateClassSchema } from './private-class.schema';
   ],
   controllers: [PrivateClassController],
   providers: [PrivateClassService],
+  exports: [PrivateClassService],
 })
 export class PrivateClassModule {}

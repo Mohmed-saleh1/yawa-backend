@@ -12,5 +12,6 @@ import { BalletEntity, BalletSchema } from './ballet.schema';
   ],
   providers: [BalletService],
   controllers: [BalletController],
+  exports: [BalletService],
 })
 export class BalletModule {}

@@ -12,5 +12,6 @@ import { PilatesController } from './pilates.controller';
   ],
   controllers: [PilatesController],
   providers: [PilatesService],
+  exports: [PilatesService],
 })
 export class PilatesModule {}
