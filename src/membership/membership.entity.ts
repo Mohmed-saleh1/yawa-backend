@@ -13,6 +13,9 @@ export class MembershipEntity {
 
   @Prop({ required: true })
   price: number;
+
+  @Prop({ required: true })
+  duration: number;
 }
 
 export const MembershipSchema = SchemaFactory.createForClass(MembershipEntity);

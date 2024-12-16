@@ -1,23 +1,4 @@
-import { IsOptional, IsString, IsNumber, IsDateString } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateBalletDto } from './create-ballet.dto';
 
-export class UpdateBalletDto {
-  @IsOptional()
-  @IsString()
-  name?: string;
-
-  @IsOptional()
-  @IsDateString()
-  date?: string;
-
-  @IsOptional()
-  @IsString()
-  time?: string;
-
-  @IsOptional()
-  @IsString()
-  description?: string;
-
-  @IsOptional()
-  @IsNumber()
-  maxAttendane?: number;
-}
+export class UpdateBalletDto extends PartialType(CreateBalletDto) {}

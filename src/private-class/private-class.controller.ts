@@ -17,7 +17,7 @@ import { UpdatePrivateClassDto } from './dto/update-private-class.dto';
 export class PrivateClassController {
   constructor(private readonly privateClassService: PrivateClassService) {}
 
-  @Post()
+  @Post('time')
   async create(@Body() createPrivateClassDto: CreatePrivateClassDto) {
     try {
       return await this.privateClassService.create(createPrivateClassDto);
@@ -29,17 +29,17 @@ export class PrivateClassController {
     }
   }
 
-  @Get()
+  @Get('time')
   async findAll() {
     return this.privateClassService.findAll();
   }
 
-  @Get(':id')
+  @Get('time/:id')
   async findOne(@Param('id') id: string) {
     return this.privateClassService.findOne(id);
   }
 
-  @Put(':id')
+  @Put('time/:id')
   async update(
     @Param('id') id: string,
     @Body() updatePrivateClassDto: UpdatePrivateClassDto,
@@ -54,7 +54,7 @@ export class PrivateClassController {
     }
   }
 
-  @Delete(':id')
+  @Delete('time/:id')
   async remove(@Param('id') id: string) {
     try {
       return await this.privateClassService.remove(id);

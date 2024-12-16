@@ -12,12 +12,13 @@ export class PilatesService {
     private readonly pilatesModel: Model<PilatesEntity>,
   ) {}
 
-  async create(
-    createPilatesDto: CreatePilatesDto,
-    search?: { date: string; time: string },
-  ): Promise<PilatesEntity> {
-    const exitsPilates = await this.pilatesModel.find({ search });
-    if (exitsPilates) {
+  async create(createPilatesDto: CreatePilatesDto): Promise<PilatesEntity> {
+    const exitsPilates = await this.pilatesModel.find({
+      date: createPilatesDto.date,
+      time: createPilatesDto.time,
+    });
+
+    if (exitsPilates.length > 0) {
       throw new HttpException(
         `A Pilates session already exists on ${createPilatesDto.date} at ${createPilatesDto.time}.`,
         HttpStatus.CONFLICT,

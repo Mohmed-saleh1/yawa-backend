@@ -21,4 +21,7 @@ export class CreatePilatesDto {
   @IsInt()
   @Min(1)
   maxAttendane: number;
+
+  @IsNotEmpty()
+  price: number;
 }

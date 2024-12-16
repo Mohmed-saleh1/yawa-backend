@@ -19,6 +19,9 @@ export class BalletEntity {
 
   @Prop({ required: true })
   maxAttendane: number;
+
+  @Prop({ required: true })
+  price: number;
 }
 
 export const BalletSchema = SchemaFactory.createForClass(BalletEntity);

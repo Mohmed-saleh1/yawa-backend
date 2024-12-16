@@ -7,7 +7,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from '@nestjs/swagger';
 import { MassageService } from './massage.service';
 import { CreateMassageDto } from './dto/create-massage.dto';
 import { UpdateMassageDto } from './dto/update-massage.dto';
@@ -19,6 +25,7 @@ export class MassageController {
   constructor(private readonly massageService: MassageService) {}
 
   // Create a new massage
+  // Create a new massage
   @Post()
   @ApiOperation({ summary: 'Create a new massage' })
   @ApiResponse({
@@ -27,6 +34,36 @@ export class MassageController {
     type: MassageEntity,
   })
   @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiBody({
+    description: 'The details of the massage to create',
+    required: true,
+    schema: {
+      type: 'object',
+      properties: {
+        title: {
+          type: 'string',
+          description: 'The title of the massage',
+          example: 'Relaxing Massage',
+        },
+        description: {
+          type: 'string',
+          description: 'A detailed description of the massage',
+          example: 'A calming and therapeutic massage.',
+        },
+        price: {
+          type: 'number',
+          description: 'The price of the massage',
+          example: 50,
+        },
+        field: {
+          type: 'string',
+          description: 'The field or category of the massage',
+          example: 'Health',
+        },
+      },
+      required: ['title', 'description', 'price', 'field'],
+    },
+  })
   async create(
     @Body() createMassageDto: CreateMassageDto,
   ): Promise<MassageEntity> {

@@ -13,4 +13,8 @@ export class CreateMembershipDto {
   @ApiProperty({ description: 'The price of the membership' })
   @IsNumber()
   price: number;
+
+  @ApiProperty({ description: 'The duration of the membership in days' })
+  @IsNumber()
+  duration: number;
 }

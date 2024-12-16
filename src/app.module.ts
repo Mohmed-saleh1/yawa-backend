@@ -11,9 +11,11 @@ import { MassageModule } from './massage/massage.module';
 import { AllProgramsModule } from './allPrograms/allPrograms.module';
 import { MembershipModule } from './membership/membership.module';
 import { PackageModule } from './packages/packages.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     AuthModule,
     UsersModule,

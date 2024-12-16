@@ -19,6 +19,9 @@ export class PilatesEntity {
 
   @Prop({ required: true })
   maxAttendane: number;
+
+  @Prop({ required: true })
+  price: number;
 }
 
 export const PilatesSchema = SchemaFactory.createForClass(PilatesEntity);

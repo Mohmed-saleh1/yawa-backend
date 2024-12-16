@@ -13,12 +13,12 @@ export class BalletService {
   ) {}
 
   async create(createBalletDto: CreateBalletDto): Promise<BalletEntity> {
-    const existingSession = await this.balletModel.findOne({
+    const existingSession = await this.balletModel.find({
       date: createBalletDto.date,
       time: createBalletDto.time,
     });
 
-    if (existingSession) {
+    if (existingSession.length > 0) {
       throw new HttpException(
         `A Ballet session already exists on ${createBalletDto.date} at ${createBalletDto.time}.`,
         HttpStatus.CONFLICT,
