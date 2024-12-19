@@ -135,7 +135,7 @@ export class AuthController {
     schema: {
       example: {
         message: 'Password reset code verified successfully.',
-        token: 'your-jwt-token',
+        token: 'your-jwt-token', // Example token
       },
     },
   })
@@ -146,11 +146,18 @@ export class AuthController {
   async verifyPasswordResetCode(
     @Body('code') code: string,
     @Res() res: Response,
-  ): Promise<string> {
+  ): Promise<void> {
+    // Verify the code using the service
     const response = await this.authService.verifyPasswordResetCode(code);
+
+    // Set the Authorization header with the token
     res.setHeader('Authorization', `Bearer ${response.token}`);
 
-    return response.message;
+    // Send the message back in the response
+    res.status(200).json({
+      message: response.message,
+      token: response.token,
+    });
   }
 
   @Post('reset-password')

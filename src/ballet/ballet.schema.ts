@@ -9,10 +9,7 @@ export class BalletEntity {
   name: string;
 
   @Prop({ required: true })
-  date: string;
-
-  @Prop({ required: true })
-  time: string;
+  date: Date;
 
   @Prop({ required: true })
   description: string;
@@ -23,5 +20,4 @@ export class BalletEntity {
   @Prop({ required: true })
   price: number;
 }
-
 export const BalletSchema = SchemaFactory.createForClass(BalletEntity);

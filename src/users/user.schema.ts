@@ -25,7 +25,7 @@ export class User extends Document {
   @Prop()
   emailVerifyExpiers: string;
 
-  @Prop()
+  @Prop({ default: false })
   isEmailVerified: boolean;
 
   @Prop()
@@ -36,6 +36,12 @@ export class User extends Document {
 
   @Prop()
   passwordResetVerified: boolean;
+
+  @Prop({ default: new Date() })
+  createdAt: Date;
+
+  @Prop({ default: new Date() })
+  updatedAt: Date;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 

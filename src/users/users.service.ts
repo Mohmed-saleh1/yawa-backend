@@ -20,6 +20,19 @@ export class UserService {
     return this.userModel.findOne({ email }).exec();
   }
 
+  transformUserResponse = (user: User) => {
+    return {
+      id: user._id, // MongoDB ObjectId
+      fullName: user.fullName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      isEmailVerified: user.isEmailVerified,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  };
+
   async findAllUsers(): Promise<User[]> {
     return this.userModel.find().exec();
   }

@@ -13,6 +13,9 @@ export class PackageEntity {
 
   @Prop({ required: true })
   price: number;
+
+  @Prop({ required: true })
+  duration: number;
 }
 
 export const PackageSchema = SchemaFactory.createForClass(PackageEntity);

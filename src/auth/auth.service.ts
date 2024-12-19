@@ -43,16 +43,16 @@ export class AuthService {
   extractTokenFromHeaders(headers: Record<string, string | string[]>): string {
     const authHeader = headers['authorization'];
 
-    if (!authHeader || typeof authHeader !== 'string') {
+    if (!authHeader) {
       throw new UnauthorizedException('Authorization header not found');
     }
 
-    if (!authHeader.startsWith('Bearer ')) {
+    if (!authHeader.toString().startsWith('Bearer ')) {
       throw new UnauthorizedException('Invalid authorization header format');
     }
 
     // Extract the token part
-    return authHeader.split(' ')[1];
+    return authHeader.toString().split(' ')[1];
   }
 
   async signup(
@@ -101,9 +101,9 @@ export class AuthService {
     const hashedCode = crypto.createHash('sha256').update(code).digest('hex');
 
     const user = await this.userModel.findOne({ emailVerifyCode: hashedCode });
-    if (user.isEmailVerified == true) {
-      throw new BadRequestException('Email is already verified.');
-    }
+    // if (user.isEmailVerified) {
+    //   throw new BadRequestException('Email is already verified.');
+    // }
 
     if (!user) {
       throw new BadRequestException(
@@ -160,13 +160,15 @@ export class AuthService {
       });
     } catch (err) {
       console.error(err);
-      throw new HttpException('Error sending verification code via email', 500);
+      throw new HttpException(err, 500);
     }
 
     return { message: 'Verification code resent successfully.' };
   }
 
-  async login(loginDto: LoginDto): Promise<{ message: string; token: string }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ message: string; token: string; user: Partial<User> }> {
     // Find the user by email
     const user = await this.userService.findUserByEmail(loginDto.email);
     if (!user) {
@@ -191,8 +193,9 @@ export class AuthService {
 
     // Generate a JWT token
     const token = createToken(user.id);
+    const transformUserResponse = this.userService.transformUserResponse(user);
 
-    return { message: 'Login successful', token };
+    return { message: 'Login successful', token, user: transformUserResponse };
   }
 
   async forgotPassword(email: string): Promise<void> {
@@ -271,17 +274,19 @@ export class AuthService {
     await user.save();
 
     // Generate the token
-    const token = createToken(user.id); // Ensure `createToken` function is implemented
+    const token = createToken(user.id);
     return { message: 'Password reset code verified successfully', token };
   }
 
   async resetedPassword(token: string, password: string) {
+    const userId = this.validateToken(token);
     const user = await this.userModel.findOne({
-      _id: this.validateToken(token),
+      _id: userId.userId,
     });
     if (!user) {
       throw new HttpException('Invalid token', HttpStatus.FORBIDDEN);
     }
+
     if (!user.passwordResetVerified) {
       throw new HttpException(
         'Password reset code has not been verified',
