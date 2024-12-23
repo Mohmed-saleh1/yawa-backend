@@ -97,7 +97,7 @@ export class AuthService {
     // 5- Return response
     return { message: 'Verification code sent to your email', token };
   }
-  async verifyEmail(code: string): Promise<{ message: string }> {
+  async verifyEmail(code: string): Promise<{ message: string; token: string }> {
     const hashedCode = crypto.createHash('sha256').update(code).digest('hex');
 
     const user = await this.userModel.findOne({ emailVerifyCode: hashedCode });
@@ -121,7 +121,9 @@ export class AuthService {
     user.emailVerifyExpiers = null;
     await user.save();
 
-    return { message: 'Email successfully verified' };
+    const token = createToken(user.id);
+
+    return { message: 'Email successfully verified', token };
   }
 
   async reSendEmailVerifyCode(email: string): Promise<{ message: string }> {
