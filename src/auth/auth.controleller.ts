@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Req, Res } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 import { LoginDto } from './dto/login.dto/login.dto';
@@ -33,10 +33,27 @@ export class AuthController {
   }
 
   @Post('verify-email')
-  @ApiOperation({ summary: 'Verify email address with verification code' })
+  @ApiOperation({
+    summary: 'Verify email address',
+    description:
+      "This endpoint verifies a user's email address using a verification code. The code must be provided in the request body.",
+  })
+  @ApiBody({
+    description: "Verification code to validate the user's email.",
+    schema: {
+      type: 'object',
+      properties: {
+        code: {
+          type: 'string',
+          description: "The verification code sent to the user's email.",
+          example: '123456',
+        },
+      },
+    },
+  })
   @ApiResponse({
     status: 200,
-    description: 'Email successfully verified',
+    description: 'Email successfully verified.',
     schema: {
       example: {
         message: 'Email successfully verified',
@@ -45,15 +62,20 @@ export class AuthController {
   })
   @ApiResponse({
     status: 400,
-    description: 'Invalid verification code or user not found.',
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Email is already verified.',
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Verification code has expired.',
+    description: `Bad Request:
+    - Invalid verification code or user not found.
+    - Email is already verified.
+    - Verification code has expired.`,
+    schema: {
+      example: {
+        message: 'Invalid verification code or user not found.',
+        possibleErrors: [
+          'Invalid verification code or user not found.',
+          'Email is already verified.',
+          'Verification code has expired.',
+        ],
+      },
+    },
   })
   async verifyEmail(@Body('code') code: string): Promise<{ message: string }> {
     return this.authService.verifyEmail(code);
@@ -100,7 +122,6 @@ export class AuthController {
     status: 401,
     description: 'Please verify your email before logging in.',
   })
-  @Post('login')
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
